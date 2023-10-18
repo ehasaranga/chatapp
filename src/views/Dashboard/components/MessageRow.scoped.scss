@@ -1,0 +1,22 @@
+
+.message-row {
+    display: flex;
+    .msg {
+        display: block;
+        margin: 0.5rem;
+        background: $primary;
+        padding: 15px;
+        border-radius: 5px;
+        color: $white;
+        max-width: 600px;
+    }
+}
+
+.message-row.right .msg {
+    margin-left: auto;
+}
+
+.message-row.left .msg {
+    margin-right: auto;
+}
+

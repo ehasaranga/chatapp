@@ -1,0 +1,36 @@
+
+
+/* Form Styling */
+
+.form {
+
+    font-size:1rem;
+
+    input {
+        font-family: $font-primary;
+    }
+
+    .form-field {
+        width: 100%;
+        padding: 10px;
+        display: block;
+        box-sizing: border-box;
+        border: 1px solid $light1;
+        background: $light2;
+        outline-color: $dark1;
+    }
+
+    .field-group {
+        label {
+            margin-bottom: 5px;
+        }
+    }
+
+}
+
+.form.form-label-top {
+    label {
+        display: block;
+    }
+
+}

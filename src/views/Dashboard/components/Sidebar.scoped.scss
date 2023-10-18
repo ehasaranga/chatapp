@@ -1,0 +1,32 @@
+.sidebar-wrap {
+    flex: 1;
+    display: block;
+    padding: 1rem;
+    box-sizing: border-box;
+    background-color: $light1;
+
+
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        height: 100%;
+
+        .chat-list-wrap {
+            flex: 1;
+        }
+    }
+
+    .sidebar .section {
+        display: block;
+    }
+
+    .sidebar .chat-list-wrap {
+        overflow: auto;
+    }
+    
+}
+
+.msg-wrap {
+    background-color: black !important;
+}

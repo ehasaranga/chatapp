@@ -1,0 +1,136 @@
+.text-center {
+    text-align: center !important;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-right {
+    text-align: right !important;
+}
+
+.bg-light1 {
+    background: $light1;
+}
+
+/* Row */
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+
+    .col {
+        display: block;
+        box-sizing: border-box;
+    }
+
+    .col-a {
+        display: block;
+        flex: 1;
+    }
+}
+
+@for $i from 1 through 12 {
+
+    .row .col-#{$i} {
+
+        width: calc((#{$i}/12) * 100%);
+
+    }
+
+}
+
+
+/* Row Gutter */
+
+@for $i from 5 through 50 {
+
+    .row.gutter-#{$i} {
+        gap: #{$i}px;        
+    }
+
+}
+
+
+/* Grid */
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+
+    & > * {
+        display: block;
+        box-sizing: border-box;
+    }
+}
+
+.grid.grid-1 > * {
+    display: block;
+    width: 100%;
+}
+
+@for $i from 5 through 50 {
+
+    .grid.gutter-#{$i} {
+        gap: #{$i}px;        
+    }
+
+}
+
+/* Spaces */
+
+.space {
+    display: block;
+    box-sizing: border-box;
+    width: auto;
+}
+
+@for $i from 5 through 100 {
+
+    .space.v#{$i} {
+        height: $i + px;
+    }
+
+    .space.h#{$i} {
+        display: inline-block;
+        width: $i + px;
+    }
+
+}
+
+
+/* Helper */
+
+.no-padding {
+    padding: 0px !important;
+}
+
+.ml-auto{
+    margin-left: auto;
+}
+
+.d-block {
+    display: block;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+@for $i from 5 through 50 {
+
+    .flex-gap-#{$i} {
+        gap: #{$i}px;        
+    }
+
+}

@@ -1,0 +1,17 @@
+.send-message-wrap {
+    width: 100%;
+    min-height: 70px;
+    padding: 1rem;
+    display: block;
+    box-sizing: border-box;
+}
+
+.msg-input {
+    padding: 15px !important;
+    border: 1px solid $dark1 !important;
+    border-radius: 5px;
+}
+
+.btn-send {
+    height: 100%;
+}
