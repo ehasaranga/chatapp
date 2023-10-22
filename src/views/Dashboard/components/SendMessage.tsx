@@ -7,7 +7,7 @@ import { ChatContext } from '../../../store/ChatContext';
 
 const SendMessage: React.FC = () => {
 
-    const { msgD } = useContext(ChatContext);
+    const { msgD, inView } = useContext(ChatContext);
 
     const { formValues, handleChange, handleSubmit, reset } = useForm({
         msg: ""
@@ -17,7 +17,7 @@ const SendMessage: React.FC = () => {
 
         if (value.msg === '') return;
 
-        msgD({ type: 'SEND_MESSAGE', payload: value.msg })
+        msgD({ type: 'SEND_MESSAGE', payload: { chatId: inView, msg:value.msg} })
 
         reset()
 

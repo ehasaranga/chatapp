@@ -1,23 +1,30 @@
 
-export const MsgReducer = (state:TMessage[], action:TMsgAction) => {
+export const MsgReducer = (state:TMessageState, action:TMsgAction) => {
 
     const { type, payload } = action;
+
+    const currentChatList = state[payload.chatId] || []
 
     switch(type) {
 
         case 'UPDATE_MSG':
 
-            return [...payload];
+            console.log(currentChatList)
+
+            return {
+                ...state,
+                [payload.chatId]: [...currentChatList , ...payload.msgs]
+            };
             break;
 
         case 'SEND_MESSAGE':
 
-            if (payload === "") return state;
+            if (payload.msg === "") return state;
 
-            return [
+            return {
                 ...state, 
-                { datetime: '', message: payload, isMe: true }
-            ];
+                [payload.chatId]: [...currentChatList, {datetime: '', message: payload.msg, isMe: true }]
+            };
             break;
 
         default:
@@ -27,8 +34,10 @@ export const MsgReducer = (state:TMessage[], action:TMsgAction) => {
 
 }
 
-
-
+export type TMessageState = {
+    [chatId: number]: TMessage[]
+    
+}
 
 export type TMessage = {
     datetime: string;
@@ -40,10 +49,16 @@ export type TMsgAction =  TMsgSendAction | TMsgUpdateAction;
 
 type TMsgSendAction = {
     type: 'SEND_MESSAGE';
-    payload: string;
+    payload: {
+        chatId: number,
+        msg: string
+    };
 }
 
 type TMsgUpdateAction = {
     type: 'UPDATE_MSG';
-    payload: TMessage[];
+    payload: {
+        chatId: number,
+        msgs: TMessage[]
+    };
 }

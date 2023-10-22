@@ -16,12 +16,14 @@ function DashboardPage() {
         { id: 3, name: 'Chat 4' },
     ]);
 
-    const [msgState, msgDispatch] = useReducer(MsgReducer, [
-        { datetime: '', message: "Hi", isMe: true },
-        { datetime: '', message: "Hello", isMe: false },
-        { datetime: '', message: "How are you?", isMe: true },
-        { datetime: '', message: "I'm good. How about you? ", isMe: false },
-    ]);
+    const [msgState, msgDispatch] = useReducer(MsgReducer, { 
+        1: [
+            { datetime: '', message: "Hi", isMe: true },
+            { datetime: '', message: "Hello", isMe: false },
+            { datetime: '', message: "How are you?", isMe: true },
+            { datetime: '', message: "I'm good. How about you? ", isMe: false },
+        ]
+    });
 
 
     useEffect(() => {
@@ -30,7 +32,7 @@ function DashboardPage() {
 
         //api fetch call for chat id then update msg reducer
 
-        msgDispatch({ type: "UPDATE_MSG", payload: [] })
+        msgDispatch({ type: "UPDATE_MSG", payload: { chatId: chatId, msgs: [] } })
 
     }, [chatId, setChatId])
 

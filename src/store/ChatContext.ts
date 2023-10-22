@@ -1,6 +1,6 @@
 import { createContext } from "react";
 import { TChat, TChatAction } from "./ChatReducer";
-import { TMessage, TMsgAction } from "./MsgReducer";
+import { TMessageState, TMsgAction } from "./MsgReducer";
 
 
 export const ChatContext = createContext({} as TChatContext);
@@ -10,7 +10,7 @@ type TChatContext = {
     setChat: React.Dispatch<React.SetStateAction<number>>;
     chatList: TChat[];
     chatD: React.Dispatch<TChatAction>;
-    msg: TMessage[];
+    msg: TMessageState;
     msgD: React.Dispatch<TMsgAction>
 };
 

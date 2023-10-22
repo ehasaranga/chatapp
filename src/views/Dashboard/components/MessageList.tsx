@@ -18,7 +18,9 @@ const scrollToBottom = (ref:any) => {
 
 const MessageList: React.FC = () => {
 
-    const { msg } = useContext(ChatContext);
+    const { msg, inView } = useContext(ChatContext);
+
+    const messages = msg[inView];
 
     const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -35,7 +37,7 @@ const MessageList: React.FC = () => {
             <div className='message-list-wrap' ref={scrollRef}>
 
 
-                {msg && msg.map((item, i) => (
+                {messages && messages.map((item, i) => (
                     <MessageRow 
                         key={i} 
                         byMe={item.isMe} 
