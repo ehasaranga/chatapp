@@ -2,28 +2,21 @@ import { createContext } from "react";
 import { MsgActionType } from "./MsgReducer";
 
 
-export const ChatContext = createContext({} as ChatContextType);
+export const ChatContext = createContext({} as TChatContext);
 
-// type ChatContextType = {
-//     chatList: ChatType[];
-//     inView: number;
-//     msg?: MessageType[];
-//     setMsg: React.Dispatch<React.SetStateAction<MessageType[]>>;
-// };
-
-type ChatContextType = {
-    chatList: ChatType[];
+type TChatContext = {
+    chatList: TChat[];
     inView: number;
-    msg: MessageType[];
+    msg: TMessage[];
     msgD: React.Dispatch<MsgActionType>
 };
 
-export type ChatType = {
+export type TChat = {
     id: number;
     name: string;
 }
 
-export type MessageType = {
+export type TMessage = {
     datetime: string;
     message: string;
     isMe: boolean;
