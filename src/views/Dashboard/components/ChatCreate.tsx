@@ -8,7 +8,7 @@ function ChatCreate() {
 
 	const { chatD } = useContext(ChatContext)
 
-	const {formValues, handleChange, handleSubmit} = useForm({
+	const {formValues, handleChange, handleSubmit, reset} = useForm({
 		name: ''
 	})
 
@@ -16,9 +16,11 @@ function ChatCreate() {
 
 		if (data.name.trim() === '') return;
 
-		chatD({ type: 'CREATE', payload: { name: data.name } });
+		chatD({ type: 'CREATE', payload: { id: 0, name: data.name } });
 
 		console.log('create chat ', data)
+
+		reset();
 
 	}
 

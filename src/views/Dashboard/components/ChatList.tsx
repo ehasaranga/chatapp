@@ -4,11 +4,13 @@ import { ChatContext } from "../../../store/ChatContext"
 
 const ChatList:React.FC = () => {
 
-	const { chatList } = useContext(ChatContext);
+	const { chatList, setChat, inView } = useContext(ChatContext);
 
-	const onClick = (id: any) => {
+	const onClick = (id: number) => {
 
-		console.log('chat cliked', id)
+		if (id === undefined) return;
+
+		setChat(id);
 
 	}
 	
@@ -25,8 +27,8 @@ const ChatList:React.FC = () => {
 								label={item.name} 
 								type="primary" 
 								size="wide" 
-								className={"text-left"} 
-								onClick={() => onClick(item.name)}
+								className={`text-left ${inView == item.id ? 'btn-active' : ''}`} 
+								onClick={() => onClick(item.id)}
 							/>
 
 					</div>

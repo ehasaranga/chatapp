@@ -80,6 +80,11 @@ body {
     height: 100%;
     border: none !important;
 }
+.btn.btn-active {
+    background-color: $white;
+    color: $primary;
+    border: 1px solid $primary;
+}
 
 
 

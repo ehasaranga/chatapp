@@ -29,17 +29,22 @@ const MessageList: React.FC = () => {
     // }, [])
 
     return (
-        <div className='message-list-wrap' ref={scrollRef}>
+
+        <div className="message-list-container">
+            
+            <div className='message-list-wrap' ref={scrollRef}>
 
 
-            {msg && msg.map((item, i) => (
-                <MessageRow 
-                    key={i} 
-                    byMe={item.isMe} 
-                    message={item.message} 
-                />
-            ))}
+                {msg && msg.map((item, i) => (
+                    <MessageRow 
+                        key={i} 
+                        byMe={item.isMe} 
+                        message={item.message} 
+                    />
+                ))}
 
+
+            </div>
 
         </div>
     )

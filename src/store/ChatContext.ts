@@ -7,6 +7,7 @@ export const ChatContext = createContext({} as TChatContext);
 
 type TChatContext = {
     inView: number;
+    setChat: React.Dispatch<React.SetStateAction<number>>;
     chatList: TChat[];
     chatD: React.Dispatch<TChatAction>;
     msg: TMessage[];

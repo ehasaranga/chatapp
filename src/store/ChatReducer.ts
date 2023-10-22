@@ -20,7 +20,7 @@ export const ChatReducer = (state: TChat[], action: TChatAction) => {
 
 
 export type TChat = {
-    id?: number;
+    id: number;
     name: string;
 }
 
