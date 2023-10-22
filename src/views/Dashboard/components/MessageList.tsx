@@ -3,26 +3,27 @@ import { useEffect, useRef } from 'react'
 import './MessageList.scoped.scss'
 import MessageRow from './MessageRow';
 
+
+const scrollToBottom = (ref:any) => {
+
+    if (ref.current === null) return;
+
+    let clientHeight:number = ref.current?.clientHeight || 0;
+    let scrollHeight = ref.current?.scrollHeight || 0;
+
+    ref.current.scrollTop = (scrollHeight - clientHeight)
+    
+}
+
 const MessageList: React.FC = () => {
 
     const scrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
 
-        scrollToBottom()
+        scrollToBottom(scrollRef)
 
     }, [])
-
-    const scrollToBottom = () => {
-
-        if (scrollRef.current === null) return;
-
-        let clientHeight:number = scrollRef.current?.clientHeight || 0;
-        let scrollHeight = scrollRef.current?.scrollHeight || 0;
-
-        scrollRef.current.scrollTop = (scrollHeight - clientHeight)
-        
-    }
 
     return (
         <div className='message-list-wrap' ref={scrollRef}>
