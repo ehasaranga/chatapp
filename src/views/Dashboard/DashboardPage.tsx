@@ -8,36 +8,14 @@ import { ChatReducer } from "../../store/ChatReducer";
 
 function DashboardPage() {
 
-    const [ chatId, setChatId ] = useState(1);
+    const [chatId, setChatId] = useState(1);
 
     const [chatList, chatDispatch] = useReducer(ChatReducer, [
-        { id: 1, name: 'Chat 1' },
-        { id: 2, name: 'Chat 3' },
-        { id: 3, name: 'Chat 4' },
+        // { id: 1, name: 'Chat 1' },
     ]);
 
-    const [msgState, msgDispatch] = useReducer(MsgReducer, { 
+    const [msgState, msgDispatch] = useReducer(MsgReducer, {
         1: [
-            { datetime: '', message: "Hi", isMe: true },
-            { datetime: '', message: "Hello", isMe: false },
-            { datetime: '', message: "How are you?", isMe: true },
-            { datetime: '', message: "I'm good. How about you? ", isMe: false },
-            { datetime: '', message: "Hi", isMe: true },
-            { datetime: '', message: "Hello", isMe: false },
-            { datetime: '', message: "How are you?", isMe: true },
-            { datetime: '', message: "I'm good. How about you? ", isMe: false },
-            { datetime: '', message: "Hi", isMe: true },
-            { datetime: '', message: "Hello", isMe: false },
-            { datetime: '', message: "How are you?", isMe: true },
-            { datetime: '', message: "I'm good. How about you? ", isMe: false },
-            { datetime: '', message: "Hi", isMe: true },
-            { datetime: '', message: "Hello", isMe: false },
-            { datetime: '', message: "How are you?", isMe: true },
-            { datetime: '', message: "I'm good. How about you? ", isMe: false },
-            { datetime: '', message: "Hi", isMe: true },
-            { datetime: '', message: "Hello", isMe: false },
-            { datetime: '', message: "How are you?", isMe: true },
-            { datetime: '', message: "I'm good. How about you? ", isMe: false },
             { datetime: '', message: "Hi", isMe: true },
             { datetime: '', message: "Hello", isMe: false },
             { datetime: '', message: "How are you?", isMe: true },
@@ -63,27 +41,45 @@ function DashboardPage() {
             setChat: setChatId,
             chatList: chatList,
             chatD: chatDispatch,
-            msg: msgState, 
+            msg: msgState,
             msgD: msgDispatch
         }}>
 
-        <div className="container no-padding">
+            <div className="container no-padding">
 
-            <div className='dashboard'>
+                <div className='dashboard'>
 
-                <Sidebar />
+                    <Sidebar />
 
-                <div className='msg-wrap flex flex-col'>
+                    <div className='msg-wrap flex flex-col'>
 
-                    <MessageList />
+                        {chatList.length > 0 ? 
+                        <>
 
-                    <SendMessage />
+                            <MessageList />
+
+                            <SendMessage />
+
+
+                        </> : 
+
+                        <div className="container content-center text-center">
+
+                            <div className="">
+                                <h2>To get started</h2>
+                                <h3>Create a Chat</h3>
+
+                            </div>
+                            
+                        </div>
+                        
+                        }
+
+                    </div>
 
                 </div>
 
             </div>
-
-        </div>
 
         </ChatContext.Provider>
 
