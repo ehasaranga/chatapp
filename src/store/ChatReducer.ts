@@ -1,5 +1,3 @@
-import { TChat } from "./ChatContext";
-
 
 export const ChatReducer = (state: TChat[], action: TChatAction) => {
 
@@ -20,6 +18,11 @@ export const ChatReducer = (state: TChat[], action: TChatAction) => {
 
 }
 
+
+export type TChat = {
+    id: number;
+    name: string;
+}
 
 export type TChatAction = {
     type: 'CREATE';

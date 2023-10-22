@@ -1,6 +1,5 @@
-import { MessageType } from "./ChatContext";
 
-export const MsgReducer = (state:MessageType[], action:MsgActionType) => {
+export const MsgReducer = (state:TMessage[], action:TMsgAction) => {
 
     const { type, payload } = action;
 
@@ -23,7 +22,13 @@ export const MsgReducer = (state:MessageType[], action:MsgActionType) => {
 }
 
 
-export type MsgActionType = {
+export type TMessage = {
+    datetime: string;
+    message: string;
+    isMe: boolean;
+}
+
+export type TMsgAction = {
     type: 'SEND_MESSAGE';
     payload: string;
 }

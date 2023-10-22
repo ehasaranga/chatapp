@@ -1,25 +1,15 @@
 import { createContext } from "react";
-import { MsgActionType } from "./MsgReducer";
-import { TChatAction } from "./ChatReducer";
+import { TChat, TChatAction } from "./ChatReducer";
+import { TMessage, TMsgAction } from "./MsgReducer";
 
 
 export const ChatContext = createContext({} as TChatContext);
 
 type TChatContext = {
+    inView: number;
     chatList: TChat[];
     chatD: React.Dispatch<TChatAction>;
-    inView: number;
     msg: TMessage[];
-    msgD: React.Dispatch<MsgActionType>
+    msgD: React.Dispatch<TMsgAction>
 };
 
-export type TChat = {
-    id: number;
-    name: string;
-}
-
-export type TMessage = {
-    datetime: string;
-    message: string;
-    isMe: boolean;
-}
