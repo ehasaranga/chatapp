@@ -24,11 +24,11 @@ const MessageList: React.FC = () => {
 
     const scrollRef = useRef<HTMLDivElement>(null);
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     scrollToBottom(scrollRef)
+        scrollToBottom(scrollRef)
 
-    // }, [])
+    }, [messages])
 
     return (
 
