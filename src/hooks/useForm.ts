@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const useForm = <T extends {[key:string]: any}>(defaultValues: T = {} as T) => {
+const useForm = <T extends {[key:string]: any}> (defaultValues: T = {} as T) => {
 
     const [state, setState] = useState<T>({...defaultValues});
 
@@ -10,7 +10,7 @@ const useForm = <T extends {[key:string]: any}>(defaultValues: T = {} as T) => {
 
     }
 
-    const handleSubmit = (onSubmit:any) => (e:any) => {
+    const handleSubmit = ( onSubmit: any) => (e:any) => {
 
         if (e) {
 

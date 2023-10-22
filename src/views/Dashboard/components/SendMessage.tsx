@@ -1,17 +1,23 @@
 
+import { useContext } from 'react';
 import FieldText from '../../../components/Form/FieldText';
 import useForm from '../../../hooks/useForm';
 import './SendMessage.scoped.scss';
+import { ChatContext } from '../../../store/ChatContext';
 
 const SendMessage: React.FC = () => {
+
+    const { msgD } = useContext(ChatContext);
 
     const { formValues, handleChange, handleSubmit, reset } = useForm({
         msg: ""
     });
 
-    const onSubmit = () => {
+    const onSubmit = (value: typeof formValues) => {
 
-        console.log(formValues)
+        if (value.msg === '') return;
+
+        msgD({ type: 'SEND_MESSAGE', payload: value.msg })
 
         reset()
 

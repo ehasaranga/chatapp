@@ -1,7 +1,8 @@
 
-import { useEffect, useRef } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import './MessageList.scoped.scss'
 import MessageRow from './MessageRow';
+import { ChatContext } from '../../../store/ChatContext';
 
 
 const scrollToBottom = (ref:any) => {
@@ -17,22 +18,27 @@ const scrollToBottom = (ref:any) => {
 
 const MessageList: React.FC = () => {
 
+    const { msg } = useContext(ChatContext);
+
     const scrollRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        scrollToBottom(scrollRef)
+    //     scrollToBottom(scrollRef)
 
-    }, [])
+    // }, [])
 
     return (
         <div className='message-list-wrap' ref={scrollRef}>
 
-            <MessageRow byMe />
 
-            <MessageRow />
-
-            <MessageRow byMe />
+            {msg && msg.map((item, i) => (
+                <MessageRow 
+                    key={i} 
+                    byMe={item.isMe} 
+                    message={item.message} 
+                />
+            ))}
 
 
         </div>

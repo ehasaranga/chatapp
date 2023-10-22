@@ -7,7 +7,7 @@ const MessageRow: React.FC<IMessageRow> = (props) => {
     return (
         <div className={`message-row ${side}`}>
 
-            <div className="msg">Hi, How are you?</div>
+            <div className="msg">{props.message}</div>
 
         </div>
     )
@@ -18,4 +18,5 @@ export default MessageRow
 
 interface IMessageRow{
     byMe?: boolean;
+    message: string;
 }

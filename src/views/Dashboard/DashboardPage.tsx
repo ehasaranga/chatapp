@@ -1,21 +1,32 @@
-import { useState } from "react";
-import { ChatContext } from "../../store/ChatContext"
+import { useReducer, useState } from "react";
+import { ChatContext, ChatType } from "../../store/ChatContext"
 import MessageList from "./components/MessageList"
 import SendMessage from "./components/SendMessage"
 import Sidebar from "./components/Sidebar"
+import { MsgReducer } from "../../store/MsgReducer";
 
 function DashboardPage() {
 
-    const [chatList, setChatList] = useState([
+    const [chatList, setChatList] = useState<ChatType[]>([
         { id: 1, name: 'Chat 1' },
         { id: 2, name: 'Chat 3' },
         { id: 3, name: 'Chat 4' },
     ]);
 
+    const [msgState, msgDispatch] = useReducer(MsgReducer, [
+        { datetime: '', message: "Hi", isMe: true },
+        { datetime: '', message: "Hello", isMe: false },
+        { datetime: '', message: "How are you?", isMe: true },
+        { datetime: '', message: "I'm good. How about you? ", isMe: false }
+    ]);
+
     return (
 
         <ChatContext.Provider value={{
-            chatList: chatList
+            chatList: chatList,
+            inView: 1,
+            msg: msgState, 
+            msgD: msgDispatch
         }}>
 
         <div className="container no-padding">
