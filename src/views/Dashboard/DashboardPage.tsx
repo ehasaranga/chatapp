@@ -1,5 +1,5 @@
-import { useReducer, useState } from "react";
-import { ChatContext, TChat } from "../../store/ChatContext"
+import { useReducer } from "react";
+import { ChatContext } from "../../store/ChatContext"
 import MessageList from "./components/MessageList"
 import SendMessage from "./components/SendMessage"
 import Sidebar from "./components/Sidebar"
