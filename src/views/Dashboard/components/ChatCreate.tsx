@@ -1,14 +1,22 @@
 
+import { useContext } from 'react'
 import FieldText from '../../../components/Form/FieldText'
 import useForm from '../../../hooks/useForm'
+import { ChatContext } from '../../../store/ChatContext'
 
 function ChatCreate() {
 
+	const { chatD } = useContext(ChatContext)
+
 	const {formValues, handleChange, handleSubmit} = useForm({
-		chatname: ''
+		name: ''
 	})
 
-	const onSubmit = (data: any) => {
+	const onSubmit = (data: typeof formValues) => {
+
+		if (data.name.trim() === '') return;
+
+		chatD({ type: 'CREATE', payload: { name: data.name } });
 
 		console.log('create chat ', data)
 
@@ -24,9 +32,9 @@ function ChatCreate() {
 					<div className="col col-a">
 
 						<FieldText
-							name='chatname'
+							name='name'
 							onChange={handleChange}
-							value={formValues.chatname}
+							value={formValues.name}
 							placeholder={'Chat Name'}
 						/>
 
