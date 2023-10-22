@@ -1,13 +1,14 @@
 import { useReducer, useState } from "react";
-import { ChatContext, ChatType } from "../../store/ChatContext"
+import { ChatContext, TChat } from "../../store/ChatContext"
 import MessageList from "./components/MessageList"
 import SendMessage from "./components/SendMessage"
 import Sidebar from "./components/Sidebar"
 import { MsgReducer } from "../../store/MsgReducer";
+import { ChatReducer } from "../../store/ChatReducer";
 
 function DashboardPage() {
 
-    const [chatList, setChatList] = useState<ChatType[]>([
+    const [chatList, chatDispatch] = useReducer(ChatReducer, [
         { id: 1, name: 'Chat 1' },
         { id: 2, name: 'Chat 3' },
         { id: 3, name: 'Chat 4' },
@@ -24,6 +25,7 @@ function DashboardPage() {
 
         <ChatContext.Provider value={{
             chatList: chatList,
+            chatD: chatDispatch,
             inView: 1,
             msg: msgState, 
             msgD: msgDispatch
