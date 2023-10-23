@@ -4,6 +4,7 @@ import DashboardPage from './views/Dashboard/DashboardPage'
 import ErrorPage from './views/Error/ErrorPage'
 import LoginPage from './views/Login/LoginPage'
 import RegisterPage from './views/Register/RegisterPage'
+import { AppContextProvider } from './store/AppContext'
 
 function App() {
 
@@ -17,21 +18,25 @@ function App() {
 
 	return (
 
-		<div className="App">
+		<AppContextProvider>
 
-			<Routes>
+			<div className="App">
 
-				<Route path="/" element={<DashboardPage />} />
+				<Routes>
 
-				<Route path="/login" element={<LoginPage />} />
+					<Route path="/" element={<DashboardPage />} />
 
-				<Route path="/register" element={<RegisterPage />} />
+					<Route path="/login" element={<LoginPage />} />
 
-				<Route path="*" element={<ErrorPage />} />
+					<Route path="/register" element={<RegisterPage />} />
 
-			</Routes>
+					<Route path="*" element={<ErrorPage />} />
 
-		</div>
+				</Routes>
+
+			</div>
+
+		</AppContextProvider>
 	)
 }
 
