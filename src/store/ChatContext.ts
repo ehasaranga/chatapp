@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 import { TChat, TChatAction } from "./ChatReducer";
 import { TMessageState, TMsgAction } from "./MsgReducer";
 
@@ -14,3 +14,9 @@ type TChatContext = {
     msgD: React.Dispatch<TMsgAction>
 };
 
+
+export const useChat = ():TChatContext => {
+
+    return useContext(ChatContext);
+
+}

@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { AppContext } from "./AppContext";
+import { useApp } from "./AppContext";
 
 
 export const UserReducer = (state: TUserState, action: TUserAction) => {
@@ -26,20 +25,21 @@ export type TUserState = {
     username?: string;
 }
 
-export const getUser = () => {
+export const useUser = () => {
 
-    const { userState } = useContext(AppContext);
+    const { userState, userDispatch } = useApp()
 
-    return userState;
+    const setUser = (user: TUserState) => {
+    
+        userDispatch({ type: UserActions.SetUser, payload: {} })
+    
+        return userState;
+    
+    }
 
-}
-
-export const setUser = (user: TUserState) => {
-
-    const { userState, userDispatch } = useContext(AppContext);
-
-    userDispatch({ type: UserActions.SetUser, payload: {} })
-
-    return userState;
+    return {
+        getUser: userState,
+        setUser, 
+    }
 
 }

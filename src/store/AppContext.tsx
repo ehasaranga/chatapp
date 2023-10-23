@@ -1,4 +1,4 @@
-import { createContext, useReducer } from "react";
+import { createContext, useContext, useReducer } from "react";
 import { TUserAction, TUserState, UserReducer } from "./UserReducer";
 
 
@@ -20,5 +20,11 @@ export const AppContextProvider = ({ children }: TAppContextProps) => {
 
 
     return <AppContext.Provider value={{userState, userDispatch}}>{children}</AppContext.Provider>
+
+}
+
+export const useApp = ():TAppContext => {
+
+    return useContext(AppContext);
 
 }
