@@ -1,12 +1,11 @@
 
-import { useContext } from 'react'
 import FieldText from '../../../components/Form/FieldText'
 import useForm from '../../../hooks/useForm'
-import { ChatContext } from '../../../store/ChatContext'
+import { useChat } from '../../../store/ChatContext'
 
 function ChatCreate() {
 
-	const { chatD } = useContext(ChatContext)
+	const { chatD } = useChat()
 
 	const {formValues, handleChange, handleSubmit, reset} = useForm({
 		name: ''

@@ -10,7 +10,7 @@ const useForm = <T extends {[key:string]: any}> (defaultValues: T = {} as T) => 
 
     }
 
-    const handleSubmit = ( onSubmit: any) => (e:any) => {
+    const handleSubmit = ( onSubmit: (values: T, e:any) => any ) => (e:any) => {
 
         if (e) {
 

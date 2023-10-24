@@ -1,10 +1,9 @@
-import { useContext } from "react"
 import Button from "../../../components/Button/Button"
-import { ChatContext } from "../../../store/ChatContext"
+import { useChat } from "../../../store/ChatContext"
 
 const ChatList:React.FC = () => {
 
-	const { chatList, setChat, inView } = useContext(ChatContext);
+	const { chatList, setChat, inView } = useChat();
 
 	const onClick = (id: number) => {
 

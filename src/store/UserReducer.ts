@@ -29,6 +29,8 @@ export const useUser = () => {
 
     const { userState, userDispatch } = useApp()
 
+    const get = () => userState
+
     const setUser = (user: TUserState) => {
     
         userDispatch({ type: UserActions.SetUser, payload: {} })
@@ -38,7 +40,7 @@ export const useUser = () => {
     }
 
     return {
-        getUser: userState,
+        get,
         setUser, 
     }
 

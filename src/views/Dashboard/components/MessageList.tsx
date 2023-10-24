@@ -1,24 +1,13 @@
 
-import { useContext, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import './MessageList.scoped.scss'
 import MessageRow from './MessageRow';
-import { ChatContext } from '../../../store/ChatContext';
-
-
-const scrollToBottom = (ref:any) => {
-
-    if (ref.current === null) return;
-
-    let clientHeight:number = ref.current?.clientHeight || 0;
-    let scrollHeight = ref.current?.scrollHeight || 0;
-
-    ref.current.scrollTop = (scrollHeight - clientHeight)
-    
-}
+import { useChat } from '../../../store/ChatContext';
+import { scrollToBottom } from '../../../utils';
 
 const MessageList: React.FC = () => {
 
-    const { msg, inView } = useContext(ChatContext);
+    const { msg, inView } = useChat();
 
     const messages = msg[inView];
 
