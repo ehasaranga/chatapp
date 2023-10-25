@@ -1,47 +1,59 @@
-import { useApp } from "./AppContext";
-
-
 export const UserReducer = (state: TUserState, action: TUserAction) => {
 
-    const { type, payload } = action;
+    const { type } = action;
 
-    return state
+    switch (type) {
+
+        case UserActions.Login:
+
+            console.log('user action', action.payload)
+
+            if (action.payload == null) return null;
+
+            return {
+                ...state,
+                id: action.payload.id,
+                name: action.payload.name,
+                username: action.payload.username
+            }
+
+            break;
+
+        case UserActions.Logout:
+            
+            return null
+
+            break;
+            
+        default:
+            return state;
+
+    }
 
 }
 
 export enum UserActions {
-    SetUser = 'SET_USER',
+    Login = 'LOGIN',
+    Logout = "LOGOUT"
 }
 
-export type TUserAction = {
-    type: UserActions;
-    payload: any;
+export type TUserAction = TUserActionLogin | TUserActionLogout;
+
+type TUserActionLogin = {
+    type: UserActions.Login;
+    payload: UserState
+}
+
+type TUserActionLogout = {
+    type: UserActions.Logout;
 }
 
 
-export type TUserState = {
+
+export type TUserState = UserState | null;
+
+type UserState = {
     id?: string;
     name?: string;
-    username?: string;
-}
-
-export const useUser = () => {
-
-    const { userState, userDispatch } = useApp()
-
-    const get = () => userState
-
-    const setUser = (user: TUserState) => {
-    
-        userDispatch({ type: UserActions.SetUser, payload: {} })
-    
-        return userState;
-    
-    }
-
-    return {
-        get,
-        setUser, 
-    }
-
+    username: string;
 }

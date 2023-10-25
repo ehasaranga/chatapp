@@ -1,20 +1,13 @@
-import { useEffect } from 'react'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import DashboardPage from './views/Dashboard/DashboardPage'
 import ErrorPage from './views/Error/ErrorPage'
 import LoginPage from './views/Login/LoginPage'
 import RegisterPage from './views/Register/RegisterPage'
 import { AppContextProvider } from './store/AppContext'
+import { PrivateLayout } from './components/PrivateLayout/PrivateLayout'
+import { LoginRedirect } from './components/LoginRedirect/loginRedirect'
 
 function App() {
-
-	// const navigate = useNavigate();
-
-	// useEffect(() => {
-
-	// 	navigate('/login');
-
-	// }, [])
 
 	return (
 
@@ -24,11 +17,20 @@ function App() {
 
 				<Routes>
 
-					<Route path="/" element={<DashboardPage />} />
+					<Route element={<PrivateLayout />}>
 
-					<Route path="/login" element={<LoginPage />} />
+						<Route path="/" element={<DashboardPage />} />
 
-					<Route path="/register" element={<RegisterPage />} />
+					</Route>
+
+
+					{/* <Route element={<LoginRedirect />}> */}
+
+						<Route path="/login" element={<LoginPage />} />
+
+						<Route path="/register" element={<RegisterPage />} />
+
+					{/* </Route> */}
 
 					<Route path="*" element={<ErrorPage />} />
 

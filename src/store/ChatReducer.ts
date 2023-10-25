@@ -5,7 +5,7 @@ export const ChatReducer = (state: TChat[], action: TChatAction) => {
 
     switch (type) {
 
-        case 'CREATE': 
+        case TChatActionType.Create: 
 
             return [...state, { id: state.length + 1, name: payload.name }] as TChat[]
 
@@ -18,6 +18,10 @@ export const ChatReducer = (state: TChat[], action: TChatAction) => {
 
 }
 
+export enum TChatActionType {
+    Create = 'CREATE',
+}
+
 
 export type TChat = {
     id: number;
@@ -25,6 +29,6 @@ export type TChat = {
 }
 
 export type TChatAction = {
-    type: 'CREATE';
+    type: TChatActionType.Create;
     payload: TChat;
 }

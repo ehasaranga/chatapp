@@ -4,12 +4,17 @@ import ChatCreate from "./ChatCreate";
 import ChatList from "./ChatList";
 
 import './Sidebar.scoped.scss';
+import { useUser } from "../../../hooks/useUser";
 
 const Sidebar: React.FC = () => {
+
+    const { logout } = useUser()
 
     const navigate = useNavigate();
 
     const logOut = () => {
+
+        logout();
 
         navigate('/login');
 

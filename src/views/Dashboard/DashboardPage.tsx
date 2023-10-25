@@ -15,12 +15,12 @@ function DashboardPage() {
     ]);
 
     const [msgState, msgDispatch] = useReducer(MsgReducer, {
-        1: [
-            { datetime: '', message: "Hi", isMe: true },
-            { datetime: '', message: "Hello", isMe: false },
-            { datetime: '', message: "How are you?", isMe: true },
-            { datetime: '', message: "I'm good. How about you? ", isMe: false },
-        ]
+        // 1: [
+        //     { datetime: '', message: "Hi", isMe: true },
+        //     { datetime: '', message: "Hello", isMe: false },
+        //     { datetime: '', message: "How are you?", isMe: true },
+        //     { datetime: '', message: "I'm good. How about you? ", isMe: false },
+        // ]
     });
 
 

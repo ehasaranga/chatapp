@@ -1,7 +1,6 @@
 import { createContext, useContext, useReducer } from "react";
 import { TUserAction, TUserState, UserReducer } from "./UserReducer";
 
-
 export const AppContext = createContext({} as TAppContext);
 
 type TAppContext = {
@@ -16,8 +15,7 @@ type TAppContextProps = {
 
 export const AppContextProvider = ({ children }: TAppContextProps) => {
 
-    const [ userState, userDispatch ] = useReducer(UserReducer, {});
-
+    const [ userState, userDispatch ] = useReducer(UserReducer, null);
 
     return <AppContext.Provider value={{userState, userDispatch}}>{children}</AppContext.Provider>
 

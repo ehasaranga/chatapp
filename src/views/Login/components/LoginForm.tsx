@@ -1,10 +1,12 @@
-import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import FieldText from '../../../components/Form/FieldText'
 import Space from '../../../components/Space/Space'
 import useForm from '../../../hooks/useForm'
+import { useUser } from '../../../hooks/useUser';
 
 function LoginForm() {
+
+    const { login } = useUser()
 
     const navigate = useNavigate();
 
@@ -13,9 +15,11 @@ function LoginForm() {
         password: '',
     });
 
-    const onSubmit = (data: any) => {
+    const onSubmit = (data: typeof formValues) => {
 
         console.log(data)
+
+        login(data)
 
         navigate('/');
 
@@ -72,6 +76,10 @@ function LoginForm() {
             <div className="space v20"></div>
 
             <Link className='btn btn-primary' to={'/register'}>Register</Link>
+
+            <div className="space v20"></div>
+
+            <Link className='btn btn-primary' to={'/'}>Dashboard</Link>
 
         </div>
     )
