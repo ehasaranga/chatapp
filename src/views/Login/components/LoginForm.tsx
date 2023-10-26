@@ -77,10 +77,6 @@ function LoginForm() {
 
             <Link className='btn btn-primary' to={'/register'}>Register</Link>
 
-            <div className="space v20"></div>
-
-            <Link className='btn btn-primary' to={'/'}>Dashboard</Link>
-
         </div>
     )
 }
