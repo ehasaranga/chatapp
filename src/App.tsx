@@ -5,7 +5,7 @@ import LoginPage from './views/Login/LoginPage'
 import RegisterPage from './views/Register/RegisterPage'
 import { AppContextProvider } from './store/AppContext'
 import { PrivateLayout } from './components/PrivateLayout/PrivateLayout'
-import { LoginRedirect } from './components/LoginRedirect/loginRedirect'
+import { LoginRedirect } from './components/LoginRedirect/LoginRedirect'
 
 function App() {
 
