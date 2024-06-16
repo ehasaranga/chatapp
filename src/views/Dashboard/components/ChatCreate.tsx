@@ -1,11 +1,12 @@
 
+import { useAppDispatch } from '@/state/hooks'
 import FieldText from '../../../components/Form/FieldText'
 import useForm from '../../../hooks/useForm'
-import { useChat } from '../../../store/ChatContext'
+import { createChat } from '@/state/chatSlice'
 
 function ChatCreate() {
 
-	const { chatD } = useChat()
+	const dispatch = useAppDispatch()
 
 	const {formValues, handleChange, handleSubmit, reset} = useForm({
 		name: ''
@@ -15,7 +16,7 @@ function ChatCreate() {
 
 		if (data.name.trim() === '') return;
 
-		chatD({ type: 'CREATE', payload: { id: 0, name: data.name } });
+		dispatch(createChat({ id: 0, name: data.name }))
 
 		console.log('create chat ', data)
 

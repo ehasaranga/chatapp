@@ -2,12 +2,16 @@
 import { useEffect, useRef } from 'react'
 import './MessageList.scoped.scss'
 import MessageRow from './MessageRow';
-import { useChat } from '../../../store/ChatContext';
 import { scrollToBottom } from '../../../utils';
+import { useAppSelector } from '@/state/hooks';
+import { RootState } from '@/state/store';
 
 const MessageList: React.FC = () => {
 
-    const { msg, inView } = useChat();
+
+    const { inView } = useAppSelector((state:RootState) => state.chats);
+
+    const msg = useAppSelector((state:RootState) => state.msgs);
 
     const messages = msg[inView];
 

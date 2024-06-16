@@ -3,15 +3,16 @@ import DashboardPage from './views/Dashboard/DashboardPage'
 import ErrorPage from './views/Error/ErrorPage'
 import LoginPage from './views/Login/LoginPage'
 import RegisterPage from './views/Register/RegisterPage'
-import { AppContextProvider } from './store/AppContext'
 import { PrivateLayout } from './components/PrivateLayout/PrivateLayout'
 import { LoginRedirect } from './components/LoginRedirect/LoginRedirect'
+import { Provider } from 'react-redux'
+import { store } from '@/state/store'
 
 function App() {
 
 	return (
 
-		<AppContextProvider>
+		<Provider store={store} >
 
 			<div className="App">
 
@@ -38,7 +39,7 @@ function App() {
 
 			</div>
 
-		</AppContextProvider>
+		</Provider>
 	)
 }
 

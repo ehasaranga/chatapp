@@ -11,7 +11,7 @@ function LoginForm() {
     const navigate = useNavigate();
 
     const {formValues, handleChange, handleSubmit} = useForm({
-        username: '',
+        email: '',
         password: '',
     });
 
@@ -41,9 +41,9 @@ function LoginForm() {
                     <div className="col col-12">
 
                         <FieldText
-                            name='username'
-                            value={formValues.username}
-                            label={'Username:'}
+                            name='email'
+                            value={formValues.email}
+                            label={'Email:'}
                             onChange={handleChange}
                         />
 

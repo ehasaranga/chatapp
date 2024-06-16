@@ -1,32 +1,35 @@
-import { useApp } from "../store/AppContext"
-import { UserActions } from "../store/UserReducer"
+import { useAppDispatch, useAppSelector } from "@/state/hooks"
+import { RootState } from "@/state/store"
+import { userLogin, userLogout } from "@/state/userSlice"
 
 export const useUser = () => {
 
-    const { userState, userDispatch } = useApp()
+    const user = useAppSelector((state:RootState) => state.user)
+
+    const dispatch = useAppDispatch()
 
     function login (loginDetails:any) {
-    
-        userDispatch({ type: UserActions.Login, payload: loginDetails })
+
+        dispatch(userLogin(loginDetails))
     
     }
 
     function logout () {
     
-        userDispatch({ type: UserActions.Logout })
+        dispatch(userLogout())
     
     }
 
     function auth() {
 
-        if (userState?.username != '' && userState != null) return true;
+        if (user?.email !== '' && user !== null) return true;
 
         return false;
 
     }
 
     return {
-        user:userState,
+        user:user,
         login, 
         auth,
         logout

@@ -1,28 +1,18 @@
-import { useEffect, useReducer, useState } from "react";
-import { ChatContext } from "../../store/ChatContext"
+import { useEffect, useState } from "react";
 import MessageList from "./components/MessageList"
 import SendMessage from "./components/SendMessage"
 import Sidebar from "./components/Sidebar"
-import { MsgReducer } from "../../store/MsgReducer";
-import { ChatReducer } from "../../store/ChatReducer";
+import { useAppDispatch, useAppSelector } from "@/state/hooks";
+import { RootState } from "@/state/store";
+import { updateMsgs } from "@/state/msgSlice";
 
 function DashboardPage() {
 
-    const [chatId, setChatId] = useState(1);
+    const [chatId, setChatId] = useState(0);
 
-    const [chatList, chatDispatch] = useReducer(ChatReducer, [
-        // { id: 1, name: 'Chat 1' },
-    ]);
+    const { inView } = useAppSelector((state:RootState) => state.chats)
 
-    const [msgState, msgDispatch] = useReducer(MsgReducer, {
-        // 1: [
-        //     { datetime: '', message: "Hi", isMe: true },
-        //     { datetime: '', message: "Hello", isMe: false },
-        //     { datetime: '', message: "How are you?", isMe: true },
-        //     { datetime: '', message: "I'm good. How about you? ", isMe: false },
-        // ]
-    });
-
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
 
@@ -30,58 +20,47 @@ function DashboardPage() {
 
         //api fetch call for chat id then update msg reducer
 
-        msgDispatch({ type: "UPDATE_MSG", payload: { chatId: chatId, msgs: [] } })
+        dispatch(updateMsgs({chatId: chatId, msgs: []}))
 
     }, [chatId, setChatId])
 
     return (
 
-        <ChatContext.Provider value={{
-            inView: chatId,
-            setChat: setChatId,
-            chatList: chatList,
-            chatD: chatDispatch,
-            msg: msgState,
-            msgD: msgDispatch
-        }}>
+        <div className="container no-padding">
 
-            <div className="container no-padding">
+            <div className='dashboard'>
 
-                <div className='dashboard'>
+                <Sidebar />
 
-                    <Sidebar />
+                <div className='msg-wrap flex flex-col'>
 
-                    <div className='msg-wrap flex flex-col'>
+                    {inView !== null ? 
+                    <>
 
-                        {chatList.length > 0 ? 
-                        <>
+                        <MessageList />
 
-                            <MessageList />
-
-                            <SendMessage />
+                        <SendMessage />
 
 
-                        </> : 
+                    </> : 
 
-                        <div className="container content-center text-center">
+                    <div className="container content-center text-center">
 
-                            <div className="">
-                                <h2>To get started</h2>
-                                <h3>Create a Chat</h3>
+                        <div className="">
+                            <h2>To get started</h2>
+                            <h3>Create a Chat</h3>
 
-                            </div>
-                            
                         </div>
                         
-                        }
-
                     </div>
+                    
+                    }
 
                 </div>
 
             </div>
 
-        </ChatContext.Provider>
+        </div>
 
     )
 }

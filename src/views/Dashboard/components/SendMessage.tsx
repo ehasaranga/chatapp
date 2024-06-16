@@ -2,11 +2,15 @@
 import FieldText from '../../../components/Form/FieldText';
 import useForm from '../../../hooks/useForm';
 import './SendMessage.scoped.scss';
-import { useChat } from '../../../store/ChatContext';
+import { useAppDispatch, useAppSelector } from '@/state/hooks';
+import { RootState } from '@/state/store';
+import { sendMessage } from '@/state/msgSlice';
 
 const SendMessage: React.FC = () => {
 
-    const { msgD, inView } = useChat();
+    const { inView } = useAppSelector((state:RootState) => state.chats);
+
+    const dispatch = useAppDispatch();
 
     const { formValues, handleChange, handleSubmit, reset } = useForm({
         msg: ""
@@ -14,9 +18,11 @@ const SendMessage: React.FC = () => {
 
     const onSubmit = (value: typeof formValues) => {
         
-        if (value.msg === '') return;
+        if (value.msg === '' || inView === null) return;
 
-        msgD({ type: 'SEND_MESSAGE', payload: { chatId: inView, msg:value.msg} })
+        console.log('in sending ', inView, value.msg)
+
+        dispatch(sendMessage({ chatId: inView, msg: value.msg }))
 
         reset()
 

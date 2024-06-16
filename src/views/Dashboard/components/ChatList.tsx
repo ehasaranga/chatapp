@@ -1,15 +1,19 @@
+import { useAppDispatch, useAppSelector } from "@/state/hooks";
 import Button from "../../../components/Button/Button"
-import { useChat } from "../../../store/ChatContext"
+import { RootState } from "@/state/store";
+import { updateInViewChat } from "@/state/chatSlice";
 
 const ChatList:React.FC = () => {
 
-	const { chatList, setChat, inView } = useChat();
+	const { chats, inView } = useAppSelector((state: RootState) => state.chats)
+
+	const dispatch = useAppDispatch();
 
 	const onClick = (id: number) => {
 
 		if (id === undefined) return;
 
-		setChat(id);
+		dispatch(updateInViewChat(id))
 
 	}
 	
@@ -19,15 +23,15 @@ const ChatList:React.FC = () => {
 
 			<div className="grid grid-1 gutter-10">
 
-				{chatList && chatList.map(item => (
-					<div className="item" key={item.id}>
+				{chats && chats.map((item, key) => (
+					<div className="item" key={key}>
 
 						<Button 
 								label={item.name} 
 								type="primary" 
 								size="wide" 
-								className={`text-left ${inView == item.id ? 'btn-active' : ''}`} 
-								onClick={() => onClick(item.id)}
+								className={`text-left ${inView == key ? 'btn-active' : ''}`} 
+								onClick={() => onClick(key)}
 							/>
 
 					</div>
