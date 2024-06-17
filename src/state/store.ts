@@ -10,7 +10,8 @@ export const store = configureStore({
         user: userSlice,
         chats: chatSlice,
         msgs: msgSlice
-    }
+    },
+    devTools: import.meta.env.PROD ? false : true
 })
 
 export type RootState = ReturnType<typeof store.getState>;
