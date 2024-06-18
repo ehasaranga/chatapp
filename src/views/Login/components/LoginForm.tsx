@@ -1,27 +1,34 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import FieldText from '../../../components/Form/FieldText'
 import Space from '../../../components/Space/Space'
 import useForm from '../../../hooks/useForm'
 import { useUser } from '../../../hooks/useUser';
+import { useLoginMutation } from '@/api/userApi';
 
 function LoginForm() {
 
+    const [loginUser, { data: loginData, isSuccess, isLoading }] = useLoginMutation()
+
     const { login } = useUser()
 
-    const navigate = useNavigate();
-
-    const {formValues, handleChange, handleSubmit} = useForm({
+    const { formValues, handleChange, handleSubmit } = useForm({
         email: '',
         password: '',
     });
 
     const onSubmit = (data: typeof formValues) => {
 
-        console.log(data)
+        loginUser(data).unwrap().then(data => {
 
-        login(data)
+            login(data)
 
-        navigate('/');
+            console.log('success', data)
+
+        }).catch(err => {
+
+            console.log('err ', err)
+            
+        });
 
     }
 

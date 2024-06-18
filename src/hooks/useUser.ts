@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/state/hooks"
 import { RootState } from "@/state/store"
-import { userLogin, userLogout } from "@/state/userSlice"
+import { setUser, userLogout } from "@/state/userSlice"
 
 export const useUser = () => {
 
@@ -10,7 +10,7 @@ export const useUser = () => {
 
     function login (loginDetails:any) {
 
-        dispatch(userLogin(loginDetails))
+        dispatch(setUser(loginDetails))
     
     }
 
