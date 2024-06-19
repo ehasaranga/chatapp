@@ -24,9 +24,7 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    reactScopedCssPlugin({
-
-    }),
+    reactScopedCssPlugin(),
   ],
   css: {
     preprocessorOptions: {
@@ -44,5 +42,5 @@ export default defineConfig({
       '@': path.resolve(__dirname, "src")
     }
   },
-  customLogger: logger
+  // customLogger: logger
 })
