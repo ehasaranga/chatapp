@@ -3,19 +3,6 @@ import react from '@vitejs/plugin-react'
 import { reactScopedCssPlugin } from 'rollup-plugin-react-scoped-css'
 import path from 'path';
 
-const logger = createLogger();
-const originalWarning = logger.warn;
-logger.warn = (msg: any, options) => {
-
-  if (
-    msg.includes('import(import.meta.url).then(currentExports =>') &&
-    msg.includes('The above dynamic import cannot be analyzed by Vite.')
-  )
-    return;
-  originalWarning(msg, options);
-
-};
-
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
@@ -41,6 +28,5 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, "src")
     }
-  },
-  // customLogger: logger
+  }
 })
