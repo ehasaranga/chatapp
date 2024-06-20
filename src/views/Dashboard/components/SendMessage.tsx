@@ -1,6 +1,6 @@
 
 import FieldText from '../../../components/Form/FieldText';
-import useForm from '../../../hooks/useForm';
+import { useForm } from '../../../hooks/useForm';
 import './SendMessage.scoped.scss';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import { RootState } from '@/state/store';
@@ -12,7 +12,7 @@ const SendMessage: React.FC = () => {
 
     const dispatch = useAppDispatch();
 
-    const { formValues, handleChange, handleSubmit, reset } = useForm({
+    const { values:formValues, handleChange, handleSubmit, reset } = useForm({
         msg: ""
     });
 

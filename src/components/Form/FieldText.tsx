@@ -21,6 +21,8 @@ const FieldText:React.FC<IFieldTextProps> = (props) => {
                 {...rest} 
             />
 
+            <span className="field-msg">Please enter a valid email</span>
+
         </div>
     )
 }

@@ -2,11 +2,11 @@
 import { Link } from 'react-router-dom';
 import FieldText from '../../../components/Form/FieldText';
 import Space from '../../../components/Space/Space';
-import useForm from '../../../hooks/useForm';
+import { useForm } from '../../../hooks/useForm';
 
 function RegisterForm() {
 
-	const {formValues, handleChange, handleSubmit} = useForm({
+	const { values:formValues, handleChange, handleSubmit} = useForm({
 		username: '',
 		password: '',
 		confirm_password: '',

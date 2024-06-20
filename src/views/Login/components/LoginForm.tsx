@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
-import FieldText from '../../../components/Form/FieldText'
 import Space from '../../../components/Space/Space'
-import useForm from '../../../hooks/useForm'
+import { useForm } from '../../../hooks/useForm'
 import { useUser } from '../../../hooks/useUser';
 import { useLoginMutation } from '@/api/userApi';
+import { Form } from '@/components/Form/Form';
+import FieldInput from '@/components/Form/FieldInput';
 
 function LoginForm() {
 
@@ -11,26 +12,29 @@ function LoginForm() {
 
     const { login } = useUser()
 
-    const { formValues, handleChange, handleSubmit } = useForm({
-        email: '',
-        password: '',
+    const loginForm = useForm({
+        initVal: {
+            email: '',
+            password: ''
+        },
+        onSubmit: (val, setErrors) => {
+
+            loginUser(val).unwrap().then(data => {
+
+                login(data)
+
+                console.log('success', data)
+
+            }).catch(err => {
+
+                setErrors(err.data.errors)
+
+                console.log('err ', err)
+
+            });
+
+        }
     });
-
-    const onSubmit = (data: typeof formValues) => {
-
-        loginUser(data).unwrap().then(data => {
-
-            login(data)
-
-            console.log('success', data)
-
-        }).catch(err => {
-
-            console.log('err ', err)
-            
-        });
-
-    }
 
     return (
         <div className="login-box">
@@ -41,30 +45,29 @@ function LoginForm() {
 
             <Space v={5} />
 
-            <form className='form form-label-top' onSubmit={handleSubmit(onSubmit)}>
+            <Form hook={loginForm}>
 
                 <div className="row gutter-20 edge">
 
                     <div className="col col-12">
 
-                        <FieldText
+                        <FieldInput
                             name='email'
-                            value={formValues.email}
                             label={'Email:'}
-                            onChange={handleChange}
                         />
+
 
                     </div>
 
                     <div className="col col-12">
 
-                        <FieldText
+
+                        <FieldInput
                             type='password'
                             name='password'
-                            value={formValues.password}
                             label={'Password:'}
-                            onChange={handleChange}
                         />
+
 
                     </div>
 
@@ -74,7 +77,8 @@ function LoginForm() {
 
                 <input className='btn btn-primary btn-wide' type="submit" value="Login" />
 
-            </form>
+
+            </Form>
 
             <div className="space v20"></div>
 

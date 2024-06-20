@@ -1,8 +1,12 @@
 import { useState } from 'react'
 
-const useForm = <T extends {[key:string]: any}> (defaultValues: T = {} as T) => {
+export const useForm = <T>(args: FormConfig<T>) => {
 
-    const [state, setState] = useState<T>({...defaultValues});
+    const { initVal, onSubmit } = args;
+
+    const [state, setState] = useState<T>({ ...(initVal ?? {} as T) });
+
+    const [fieldErrors, setFieldErrors] = useState<Record<any, string | string[]>>({} as any)
 
     const handleChange = (e: any) => {
 
@@ -10,34 +14,78 @@ const useForm = <T extends {[key:string]: any}> (defaultValues: T = {} as T) => 
 
     }
 
-    const handleSubmit = ( onSubmit: (values: T, e:any) => any ) => (e:any) => {
+    const handleSubmit = (e: any) => {
 
         if (e) {
 
             e.preventDefault();
-            e.persist()
+            e.persist() // not needed anymore
 
         }
 
-        onSubmit(state, e)
+        onSubmit(state as any, (err) => {
+
+            err = err ?? {};
+
+            setFieldErrors(err)
+
+        })
 
     }
 
-    const reset = (data:any = {}) => {
+    const handleOnFocus = (e: any) => {
 
-        setState({...defaultValues, ...data})
+        const name = e.target.name;
+
+        if (!formatError(name)) return;
+
+        setFieldErrors((state) => {
+
+            const newState = {...state}
+
+            delete newState[name];
+
+            return {...newState}
+
+        })
+
+    }
+
+    const formatError = (fieldName: any) => {
+
+        const err = fieldErrors[fieldName];
+
+        if (!err) return false
+
+        const errMsg = Array.isArray(err) ? err[0] : err;
+
+        return errMsg;
+    }
+
+    const reset = (data: any = {}) => {
+
+        setState({ ...initVal, ...data })
 
     }
 
     const form = {
-        formValues: state,
+        values: state,
         handleChange,
         handleSubmit,
-        reset
+        handleOnFocus,
+        reset,
+        onSubmit,
+        errors: fieldErrors,
+        formatError
     } as const
 
     return form
 
 }
 
-export default useForm;
+type FormConfig<S> = {
+    initVal?: S;
+    onSubmit: (values: S, setErrors: (err: Record<any, string | string[]>) => void) => void
+}
+
+export type UseFormHook<T> = ReturnType<typeof useForm<T>>

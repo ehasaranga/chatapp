@@ -1,14 +1,14 @@
 
 import { useAppDispatch } from '@/state/hooks'
 import FieldText from '../../../components/Form/FieldText'
-import useForm from '../../../hooks/useForm'
+import { useForm } from '../../../hooks/useForm'
 import { createChat } from '@/state/chatSlice'
 
 function ChatCreate() {
 
 	const dispatch = useAppDispatch()
 
-	const {formValues, handleChange, handleSubmit, reset} = useForm({
+	const { values:formValues, handleChange, handleSubmit, reset} = useForm({
 		name: ''
 	})
 
