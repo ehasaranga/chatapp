@@ -23,13 +23,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
         }
 
-        onSubmit(state as any, (err) => {
-
-            err = err ?? {};
-
-            setFieldErrors(err)
-
-        })
+        onSubmit(state as any, ctx)
 
     }
 
@@ -41,11 +35,11 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
         setFieldErrors((state) => {
 
-            const newState = {...state}
+            const newState = { ...state }
 
             delete newState[name];
 
-            return {...newState}
+            return { ...newState }
 
         })
 
@@ -68,6 +62,22 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
     }
 
+    const setErrors = (err: Record<any, string | string[]>) => {
+
+        err = err ?? {};
+
+        setFieldErrors(err)
+
+    }
+
+    const ctx = {
+        values: state,
+        reset,
+        onSubmit,
+        errors: fieldErrors,
+        setErrors: setErrors,
+    } as const
+
     const form = {
         values: state,
         handleChange,
@@ -76,6 +86,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
         reset,
         onSubmit,
         errors: fieldErrors,
+        setErrors: setErrors,
         formatError
     } as const
 
@@ -85,7 +96,10 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
 type FormConfig<S> = {
     initVal?: S;
-    onSubmit: (values: S, setErrors: (err: Record<any, string | string[]>) => void) => void
+    onSubmit: (values: S, ctx: UseFormCtx<S>) => void
 }
+
+
+type UseFormCtx<T> = Pick<UseFormHook<T>, 'values' | 'setErrors' | 'onSubmit' | 'reset' | 'errors'>
 
 export type UseFormHook<T> = ReturnType<typeof useForm<T>>

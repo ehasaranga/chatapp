@@ -1,22 +1,24 @@
 
 import { Link } from 'react-router-dom';
-import FieldText from '../../../components/Form/FieldText';
 import Space from '../../../components/Space/Space';
 import { useForm } from '../../../hooks/useForm';
+import { Form } from '@/components/Form/Form';
+import FieldInput from '@/components/Form/FieldInput';
 
 function RegisterForm() {
 
-	const { values:formValues, handleChange, handleSubmit} = useForm({
-		username: '',
-		password: '',
-		confirm_password: '',
+	const registerForm = useForm({
+		initVal: {
+			username: '',
+			password: '',
+			confirm_password: '',
+		},
+		onSubmit: (val, ctx) => {
+
+			console.log(val)
+
+		}
 	});
-
-	const onSubmit = (data: any) => {
-
-		console.log(data)
-
-	}
 
 	return (
 		<div className="login-box">
@@ -27,41 +29,35 @@ function RegisterForm() {
 
 			<Space v={5} />
 
-			<form className='form form-label-top' onSubmit={handleSubmit(onSubmit)}>
+			<Form hook={registerForm}>
 
 				<div className="row gutter-20 edge">
 
 					<div className="col col-12">
 
-						<FieldText
+						<FieldInput
 							name='username'
-							value={formValues.username}
 							label={'Username:'}
-							onChange={handleChange}
 						/>
 
 					</div>
 
 					<div className="col col-12">
 
-						<FieldText
+						<FieldInput
 							type='password'
 							name='password'
-							value={formValues.password}
 							label={'Password:'}
-							onChange={handleChange}
 						/>
 
 					</div>
 
 					<div className="col col-12">
 
-						<FieldText
+						<FieldInput
 							type='password'
 							name='confirm_password'
-							value={formValues.confirm_password}
 							label={'Confirm Password:'}
-							onChange={handleChange}
 						/>
 
 					</div>
@@ -72,7 +68,7 @@ function RegisterForm() {
 
 				<input className='btn btn-primary btn-wide' type="submit" value="Create Account" />
 
-			</form>
+			</Form>
 
 			<div className="space v20"></div>
 

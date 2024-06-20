@@ -3,40 +3,42 @@ import { useAppDispatch } from '@/state/hooks'
 import FieldText from '../../../components/Form/FieldText'
 import { useForm } from '../../../hooks/useForm'
 import { createChat } from '@/state/chatSlice'
+import { Form } from '@/components/Form/Form'
+import FieldInput from '@/components/Form/FieldInput'
 
 function ChatCreate() {
 
 	const dispatch = useAppDispatch()
 
-	const { values:formValues, handleChange, handleSubmit, reset} = useForm({
-		name: ''
-	})
+	const chatCreateForm = useForm({
+		initVal: {
+			name: ""
+		},
+		onSubmit: (val, ctx) => {
 
-	const onSubmit = (data: typeof formValues) => {
+			if (val.name.trim() === '') return;
 
-		if (data.name.trim() === '') return;
+			dispatch(createChat({ id: 0, name: val.name }))
 
-		dispatch(createChat({ id: 0, name: data.name }))
+			console.log('create chat ', val)
 
-		console.log('create chat ', data)
+			ctx.reset();
 
-		reset();
-
-	}
+		}
+	});
 
 	return (
 		<div className={''}>
 
-			<form className='form' onSubmit={handleSubmit(onSubmit)}>
+			<Form hook={chatCreateForm}>
+				{/* <form className='form' onSubmit={handleSubmit(onSubmit)}> */}
 
 				<div className="row gutter-10 edge">
 
 					<div className="col col-a">
 
-						<FieldText
+						<FieldInput
 							name='name'
-							onChange={handleChange}
-							value={formValues.name}
 							placeholder={'Chat Name'}
 						/>
 
@@ -50,7 +52,7 @@ function ChatCreate() {
 
 				</div>
 
-			</form>
+			</Form>
 
 		</div>
 	)

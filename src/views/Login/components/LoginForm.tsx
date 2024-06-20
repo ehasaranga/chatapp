@@ -17,7 +17,7 @@ function LoginForm() {
             email: '',
             password: ''
         },
-        onSubmit: (val, setErrors) => {
+        onSubmit: (val, ctx) => {
 
             loginUser(val).unwrap().then(data => {
 
@@ -27,7 +27,7 @@ function LoginForm() {
 
             }).catch(err => {
 
-                setErrors(err.data.errors)
+                ctx.setErrors(err.data.errors)
 
                 console.log('err ', err)
 
