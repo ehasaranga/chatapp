@@ -22,12 +22,12 @@ export const useForm = <T>(args: FormConfig<T>) => {
             e.persist() // not needed anymore
 
         }
-        
-        isValidated().then(() => {
 
+        if (await runValidation()) {
+            
             onSubmit(state as any, ctx)
 
-        })
+        }
 
 
     }
@@ -50,15 +50,15 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
     }
 
-    const handleOnBlur = (e: any) => {
+    const handleOnBlur = async (e: any) => {
 
         const name = e.target.name;
 
-        isValidated(name)
+        await runValidation(name)
 
     }
 
-    const isValidated = (name?: any): Promise<boolean> => {
+    const runValidation = (name?: any): Promise<boolean> => {
 
         return new Promise((resolve, reject) => {
 
@@ -71,7 +71,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
                 if (Object.keys(errors ?? {}).length) throw errors
 
-                resolve(true)
+                return resolve(true)
 
             } catch (err: any) {
 
@@ -81,6 +81,8 @@ export const useForm = <T>(args: FormConfig<T>) => {
                     ...state,
                     ...updateVal
                 }))
+
+                return resolve(false)
 
             }
 
