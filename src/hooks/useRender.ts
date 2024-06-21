@@ -7,4 +7,6 @@ export const useRender = (name: string = '') => {
 
     console.log(`renders ${name}: `, render.current++);
 
+    return render.current;
+
 }

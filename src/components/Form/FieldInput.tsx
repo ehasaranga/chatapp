@@ -10,7 +10,7 @@ const FieldInput:React.FC<IFieldTextProps> = (props) => {
     const classes = ['form-field'];
     if (className) classes.push(className);
 
-    const handleChange = ctx.handleChange ?? onChange
+    const handleChange = onChange ?? ctx.handleChange
 
     const inputValue = ctx.values[name] ?? value ?? '';
 
