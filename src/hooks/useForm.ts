@@ -14,7 +14,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
     }
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = async (e: any) => {
 
         if (e) {
 
@@ -22,8 +22,13 @@ export const useForm = <T>(args: FormConfig<T>) => {
             e.persist() // not needed anymore
 
         }
+        
+        isValidated().then(() => {
 
-        onSubmit(state as any, ctx)
+            onSubmit(state as any, ctx)
+
+        })
+
 
     }
 
@@ -49,28 +54,37 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
         const name = e.target.name;
 
-        if (!validate) return;
+        isValidated(name)
 
-        try {
+    }
 
-            const errors: any = validate(state)
+    const isValidated = (name?: any): Promise<boolean> => {
 
-            if (!errors[name]) return
+        return new Promise((resolve, reject) => {
 
-            setFieldErrors(state => ({
-                ...state,
-                [name]: errors[name]
-            }))
+            //validate function was not passed so neglecting validation. hence resolve -> true
+            if (typeof validate !== 'function') return resolve(true);
 
-        } catch (err: any) {
+            try {
 
-            setFieldErrors(state => ({
-                ...state,
-                [name]: err[name]
-            }))
+                const errors: any = validate(state)
 
+                if (Object.keys(errors ?? {}).length) throw errors
 
-        }
+                resolve(true)
+
+            } catch (err: any) {
+
+                const updateVal = name ? { [name]: err[name] } : err
+
+                setFieldErrors(state => ({
+                    ...state,
+                    ...updateVal
+                }))
+
+            }
+
+        })
 
     }
 
@@ -100,7 +114,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
     }
 
 
-    const ctx:UseFormCtx<T> = {
+    const ctx: UseFormCtx<T> = {
         values: state,
         reset,
         onSubmit,
@@ -125,7 +139,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
 type FormConfig<S> = {
     initVal?: S;
-    onSubmit: (values: S, ctx: UseFormCtx<S>) => void, 
+    onSubmit: (values: S, ctx: UseFormCtx<S>) => void,
     validate?: (values: S) => Record<any, string | string[]> | unknown
 }
 
