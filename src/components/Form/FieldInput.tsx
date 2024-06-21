@@ -1,9 +1,9 @@
-import { FormContext } from '@/components/Form/Form';
-import React, { useContext } from 'react'
+import { useFormContext } from '@/components/Form/Form';
+import React from 'react'
 
 const FieldInput:React.FC<IFieldTextProps> = (props) => {
 
-    const ctx = useContext(FormContext);
+    const ctx = useFormContext();
 
     const { name, value, label, onChange, type, placeholder, className, ...rest } = props;
 
