@@ -29,6 +29,7 @@ const FieldInput:React.FC<IFieldTextProps> = (props) => {
                 onChange={handleChange} 
                 placeholder={placeholder}
                 onFocus={ctx.handleOnFocus}
+                onBlur={ctx.handleOnBlur}
                 {...rest} 
             />
 

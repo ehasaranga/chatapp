@@ -5,6 +5,7 @@ import { useUser } from '../../../hooks/useUser';
 import { useLoginMutation } from '@/api/userApi';
 import { Form } from '@/components/Form/Form';
 import FieldInput from '@/components/Form/FieldInput';
+import { z } from 'zod';
 
 function LoginForm() {
 
@@ -33,6 +34,16 @@ function LoginForm() {
 
             });
 
+        },
+        validate: (val) => {
+
+            const schema = z.object({
+                email: z.string().email(),
+                password: z.string().min(4)
+            })
+
+            return schema.safeParse(val).error?.flatten().fieldErrors
+            
         }
     });
 

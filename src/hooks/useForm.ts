@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 export const useForm = <T>(args: FormConfig<T>) => {
 
-    const { initVal, onSubmit } = args;
+    const { initVal, onSubmit, validate } = args;
 
     const [state, setState] = useState<T>({ ...(initVal ?? {} as T) });
 
@@ -45,6 +45,35 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
     }
 
+    const handleOnBlur = (e: any) => {
+
+        const name = e.target.name;
+
+        if (!validate) return;
+
+        try {
+
+            const errors: any = validate(state)
+
+            if (!errors[name]) return
+
+            setFieldErrors(state => ({
+                ...state,
+                [name]: errors[name]
+            }))
+
+        } catch (err: any) {
+
+            setFieldErrors(state => ({
+                ...state,
+                [name]: err[name]
+            }))
+
+
+        }
+
+    }
+
     const formatError = (fieldName: any) => {
 
         const err = fieldErrors[fieldName];
@@ -70,7 +99,8 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
     }
 
-    const ctx = {
+
+    const ctx:UseFormCtx<T> = {
         values: state,
         reset,
         onSubmit,
@@ -78,28 +108,28 @@ export const useForm = <T>(args: FormConfig<T>) => {
         setErrors: setErrors,
     } as const
 
-    const form = {
+    return {
         values: state,
         handleChange,
         handleSubmit,
         handleOnFocus,
+        handleOnBlur,
         reset,
         onSubmit,
         errors: fieldErrors,
         setErrors: setErrors,
-        formatError
+        formatError,
     } as const
-
-    return form
 
 }
 
 type FormConfig<S> = {
     initVal?: S;
-    onSubmit: (values: S, ctx: UseFormCtx<S>) => void
+    onSubmit: (values: S, ctx: UseFormCtx<S>) => void, 
+    validate?: (values: S) => Record<any, string | string[]> | unknown
 }
 
 
-type UseFormCtx<T> = Pick<UseFormHook<T>, 'values' | 'setErrors' | 'onSubmit' | 'reset' | 'errors'>
+type UseFormCtx<T> = Omit<UseFormHook<T>, 'formatError' | 'handleOnFocus' | 'handleSubmit' | 'handleChange' | 'handleOnBlur'>
 
 export type UseFormHook<T> = ReturnType<typeof useForm<T>>
