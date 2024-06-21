@@ -9,3 +9,11 @@ export const scrollToBottom = (ref:any) => {
     ref.current.scrollTop = (scrollHeight - clientHeight)
     
 }
+
+export const isUndefined = (data:unknown) => {
+
+    if (typeof isUndefined === 'undefined') return true;
+
+    return false;
+    
+}
