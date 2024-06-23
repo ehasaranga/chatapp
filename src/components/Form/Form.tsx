@@ -1,11 +1,13 @@
 import { type UseFormHook } from "@/hooks/useForm";
 import React, { PropsWithChildren, createContext, useContext } from "react";
 
-type FormProps = PropsWithChildren & { hook: UseFormHook<any> }
+type UseForm = Omit<UseFormHook<any>, 'register'>
 
-export const FormContext = createContext<UseFormHook<any>>({} as UseFormHook<any>);
+type FormProps = PropsWithChildren & { hook: UseForm }
 
-export const useFormContext = (): UseFormHook<any> => {
+export const FormContext = createContext<UseForm>({} as UseForm);
+
+export const useFormContext = (): UseForm => {
     return useContext(FormContext)
 }
 

@@ -1,16 +1,30 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 export const useForm = <T>(args: FormConfig<T>) => {
 
     const { initVal, onSubmit, validate } = args;
 
-    const [state, setState] = useState<T>({ ...(initVal ?? {} as T) });
+    const _state = useRef<T | any>({ ...(initVal ?? {} as T) })
+
+    const _childRef = useRef<object | any>({})
+
+    // const [state, setState] = useState<T>({ ...(initVal ?? {} as T) });
+
+    const [refresh , setRefresh] = useState<number>(0);
 
     const [fieldErrors, setFieldErrors] = useState<Record<any, string | string[]>>({} as any)
 
     const handleChange = (e: any) => {
 
-        setState(state => ({ ...state, [e.target.name]: e.target.value }))
+        const { name, value } = e.target;
+
+        console.log('g handleChange')
+
+        set(name, value)
+
+        _childRef.current[name].current.refresh()
+
+        // setState(state => ({ ...state, [e.target.name]: e.target.value }))
 
     }
 
@@ -23,9 +37,11 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
         }
 
+        console.log(_state.current)
+
         if (await runValidation()) {
             
-            onSubmit(state as any, ctx)
+            onSubmit(get() as any, ctx)
 
         }
 
@@ -38,15 +54,15 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
         if (!formatError(name)) return;
 
-        setFieldErrors((state) => {
+        // setFieldErrors((state) => {
 
-            const newState = { ...state }
+        //     const newState = { ...state }
 
-            delete newState[name];
+        //     delete newState[name];
 
-            return { ...newState }
+        //     return { ...newState }
 
-        })
+        // })
 
     }
 
@@ -54,7 +70,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
         const name = e.target.name;
 
-        await runValidation(name)
+        // await runValidation(name)
 
     }
 
@@ -67,7 +83,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
             try {
 
-                const errors: any = validate(state)
+                const errors: any = validate(_state.current)
 
                 if (Object.keys(errors ?? {}).length) throw errors
 
@@ -103,7 +119,13 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
     const reset = (data: any = {}) => {
 
-        setState({ ...initVal, ...data })
+        _state.current = {...initVal, ...data}
+
+        console.log('reset ran');
+
+        trigger()
+
+        // setState(state => ({...initVal, ...data}))
 
     }
 
@@ -115,17 +137,56 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
     }
 
+    const get = (field?: any) => {
+
+        if (!field) return _state.current;
+
+        return _state.current[field];
+
+    }
+
+    const set = (field: any, val: any) => {
+
+        _state.current[field] = val;
+
+    }
+
+    const trigger = () => {
+
+        setRefresh(val => val + 1)
+
+    }
+
+    const register = (args:RegisterType) => {     
+
+        const type = args.type ?? 'text';
+
+        const ref = useRef()
+
+        const props = {
+            ...args,
+            ref,
+            type
+        }
+
+        _childRef.current[args.name] = ref
+
+        return props
+    }
 
     const ctx: UseFormCtx<T> = {
-        values: state,
+        values: get(),
         reset,
         onSubmit,
         errors: fieldErrors,
         setErrors: setErrors,
     } as const
 
-    return {
-        values: state,
+    const form = {
+        register,
+        refresh,
+        set,
+        values: get(),
         handleChange,
         handleSubmit,
         handleOnFocus,
@@ -135,8 +196,17 @@ export const useForm = <T>(args: FormConfig<T>) => {
         errors: fieldErrors,
         setErrors: setErrors,
         formatError,
-    } as const
+    } as const;
 
+    return form
+
+}
+
+type RegisterType = {
+    name: string;
+    label: string;
+    type?: 'text' | 'password' | 'number' | 'tel';
+    required?: boolean;
 }
 
 type FormConfig<S> = {
@@ -146,6 +216,15 @@ type FormConfig<S> = {
 }
 
 
-type UseFormCtx<T> = Omit<UseFormHook<T>, 'formatError' | 'handleOnFocus' | 'handleSubmit' | 'handleChange' | 'handleOnBlur'>
+type UseFormCtx<T> = Omit<UseFormHook<T>, 
+    'formatError' | 
+    'handleOnFocus' | 
+    'handleSubmit' | 
+    'handleChange' | 
+    'handleOnBlur' | 
+    'set' | 
+    'register' | 
+    'refresh'
+>
 
 export type UseFormHook<T> = ReturnType<typeof useForm<T>>

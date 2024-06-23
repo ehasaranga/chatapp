@@ -13,26 +13,28 @@ function LoginForm() {
 
     const { login } = useUser()
 
-    const loginForm = useForm({
+    const {register, ...loginForm} = useForm({
         initVal: {
             email: '',
             password: ''
         },
         onSubmit: (val, ctx) => {
 
-            loginUser(val).unwrap().then(data => {
+            ctx.reset()
 
-                login(data)
+            // loginUser(val).unwrap().then(data => {
 
-                console.log('success', data)
+            //     login(data)
 
-            }).catch(err => {
+            //     console.log('success', data)
 
-                ctx.setErrors(err.data.errors)
+            // }).catch(err => {
 
-                console.log('err ', err)
+            //     ctx.setErrors(err.data.errors)
 
-            });
+            //     console.log('err ', err)
+
+            // });
 
         },
         validate: (val) => {
@@ -63,8 +65,12 @@ function LoginForm() {
                     <div className="col col-12">
 
                         <FieldInput
-                            name='email'
-                            label={'Email:'}
+
+                            {...register({
+                                name: 'email',
+                                label: 'Email:'
+                            })}
+
                         />
 
 
@@ -73,10 +79,18 @@ function LoginForm() {
                     <div className="col col-12">
 
 
-                        <FieldInput
+                        {/* <FieldInput
                             type='password'
                             name='password'
                             label={'Password:'}
+                        /> */}
+
+                        <FieldInput
+                            {...register({
+                                name: 'password',
+                                type: 'password',
+                                label: 'Password:',
+                            })}
                         />
 
 

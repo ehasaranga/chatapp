@@ -1,4 +1,5 @@
 import { useFormContext } from '@/components/Form/Form';
+import { withField } from '@/components/Form/withField';
 import React from 'react'
 
 const FieldInput:React.FC<IFieldTextProps> = (props) => {
@@ -39,7 +40,7 @@ const FieldInput:React.FC<IFieldTextProps> = (props) => {
     )
 }
 
-export default FieldInput
+export default withField(FieldInput)
 
 interface IFieldTextProps {
     type?: 'text' | 'password' | 'number' | 'tel',
