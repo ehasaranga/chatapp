@@ -18,11 +18,9 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
         const { name, value } = e.target;
 
-        console.log('g handleChange')
+        // console.log('g handleChange')
 
         set(name, value)
-
-        _childRef.current[name].current.refresh()
 
         // setState(state => ({ ...state, [e.target.name]: e.target.value }))
 
@@ -37,7 +35,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
         }
 
-        console.log(_state.current)
+        // console.log(_state.current)
 
         if (await runValidation()) {
             
@@ -54,15 +52,15 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
         if (!formatError(name)) return;
 
-        // setFieldErrors((state) => {
+        setFieldErrors((state) => {
 
-        //     const newState = { ...state }
+            const newState = { ...state }
 
-        //     delete newState[name];
+            delete newState[name];
 
-        //     return { ...newState }
+            return { ...newState }
 
-        // })
+        })
 
     }
 
@@ -70,7 +68,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
         const name = e.target.name;
 
-        // await runValidation(name)
+        await runValidation(name)
 
     }
 
@@ -121,7 +119,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
         _state.current = {...initVal, ...data}
 
-        console.log('reset ran');
+        // console.log('reset ran');
 
         trigger()
 
@@ -148,6 +146,8 @@ export const useForm = <T>(args: FormConfig<T>) => {
     const set = (field: any, val: any) => {
 
         _state.current[field] = val;
+
+        _childRef.current[field].current.refresh()
 
     }
 
