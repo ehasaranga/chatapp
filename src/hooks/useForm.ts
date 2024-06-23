@@ -22,7 +22,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
         // console.log('g handleChange')
 
-        set(name, value)
+        set(value, name)
 
         // setState(state => ({ ...state, [e.target.name]: e.target.value }))
 
@@ -86,7 +86,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
             try {
 
-                const errors: any = validate(_state.current)
+                const errors: any = validate(get())
 
                 if (Object.keys(errors ?? {}).length) throw errors
 
@@ -131,7 +131,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
     /* FORM reset */
     const reset = (data: any = {}) => {
 
-        _state.current = {...initVal, ...data}
+        set({...initVal, ...data})
 
         // console.log('reset ran');
 
@@ -152,11 +152,21 @@ export const useForm = <T>(args: FormConfig<T>) => {
     }
 
     /* FIELD values set */
-    const set = (field: any, val: any) => {
+    const set = (val: any, field?: any) => {
 
-        _state.current[field] = val;
+        if (typeof field === 'undefined') {
 
-        _childRef.current[field].current.refresh()
+            //wont refresh field component
+
+            _state.current = val;
+
+        } else {
+
+            _state.current[field] = val;
+
+            _childRef.current[field].current.refresh()
+
+        }
 
     }
 
