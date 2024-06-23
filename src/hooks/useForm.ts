@@ -6,6 +6,8 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
     const _state = useRef<T | any>({ ...(initVal ?? {} as T) })
 
+    const _fieldErrors = useRef<Record<any, string | string[]>>({} as any)
+
     const _childRef = useRef<object | any>({})
 
     // const [state, setState] = useState<T>({ ...(initVal ?? {} as T) });
@@ -26,6 +28,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
     }
 
+    /* on FORM submit */
     const handleSubmit = async (e: any) => {
 
         if (e) {
@@ -46,6 +49,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
     }
 
+    /* on FIELD submit */
     const handleOnFocus = (e: any) => {
 
         const name = e.target.name;
@@ -64,6 +68,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
     }
 
+    /* on FIELD blur */
     const handleOnBlur = async (e: any) => {
 
         const name = e.target.name;
@@ -104,6 +109,14 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
     }
 
+    const setErrors = (err: Record<any, string | string[]>) => {
+
+        err = err ?? {};
+
+        setFieldErrors(err)
+
+    }
+
     const formatError = (fieldName: any) => {
 
         const err = fieldErrors[fieldName];
@@ -115,26 +128,21 @@ export const useForm = <T>(args: FormConfig<T>) => {
         return errMsg;
     }
 
+    /* FORM reset */
     const reset = (data: any = {}) => {
 
         _state.current = {...initVal, ...data}
 
         // console.log('reset ran');
 
-        trigger()
-
         // setState(state => ({...initVal, ...data}))
 
-    }
+        trigger()
 
-    const setErrors = (err: Record<any, string | string[]>) => {
-
-        err = err ?? {};
-
-        setFieldErrors(err)
 
     }
 
+    /* FIELD values get */
     const get = (field?: any) => {
 
         if (!field) return _state.current;
@@ -143,6 +151,7 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
     }
 
+    /* FIELD values set */
     const set = (field: any, val: any) => {
 
         _state.current[field] = val;
@@ -151,12 +160,15 @@ export const useForm = <T>(args: FormConfig<T>) => {
 
     }
 
+
+    /* trigger FORM refresh */
     const trigger = () => {
 
         setRefresh(val => val + 1)
 
     }
 
+    /* auto setup props and setup ref */
     const register = (args:RegisterType) => {     
 
         const type = args.type ?? 'text';
