@@ -1,5 +1,5 @@
 import React from 'react'
-import { useFormContext } from 'react-ezform';
+import { useFormContext, withField } from 'react-ezform';
 
 const FieldInput:React.FC<IFieldTextProps> = (props) => {
 
