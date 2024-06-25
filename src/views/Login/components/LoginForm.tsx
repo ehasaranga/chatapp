@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
 import Space from '../../../components/Space/Space'
-import { useForm } from '../../../hooks/useForm'
 import { useUser } from '../../../hooks/useUser';
 import { useLoginMutation } from '@/api/userApi';
-import { Form } from '@/components/Form/Form';
 import FieldInput from '@/components/Form/FieldInput';
 import { z } from 'zod';
+import { Form, useForm } from 'react-ezform';
 
 function LoginForm() {
 

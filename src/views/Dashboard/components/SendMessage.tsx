@@ -1,12 +1,10 @@
 
-import FieldText from '../../../components/Form/FieldText';
-import { useForm } from '../../../hooks/useForm';
 import './SendMessage.scoped.scss';
 import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import { RootState } from '@/state/store';
 import { sendMessage } from '@/state/msgSlice';
-import { Form } from '@/components/Form/Form';
 import FieldInput from '@/components/Form/FieldInput';
+import { Form, useForm } from 'react-ezform';
 
 const SendMessage: React.FC = () => {
 
