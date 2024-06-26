@@ -2,7 +2,8 @@
 import { Link } from 'react-router-dom';
 import Space from '../../../components/Space/Space';
 import FieldInput from '@/components/Form/FieldInput';
-import { Form, useForm } from 'react-ezform';
+import { useForm } from 'react-ezform';
+import { Form } from '@/components/Form/Form';
 
 function RegisterForm() {
 

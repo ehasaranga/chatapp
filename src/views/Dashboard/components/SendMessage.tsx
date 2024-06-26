@@ -4,7 +4,8 @@ import { useAppDispatch, useAppSelector } from '@/state/hooks';
 import { RootState } from '@/state/store';
 import { sendMessage } from '@/state/msgSlice';
 import FieldInput from '@/components/Form/FieldInput';
-import { Form, useForm } from 'react-ezform';
+import { useForm } from 'react-ezform';
+import { Form } from '@/components/Form/Form';
 
 const SendMessage: React.FC = () => {
 

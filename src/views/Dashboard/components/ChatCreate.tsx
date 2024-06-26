@@ -2,7 +2,8 @@
 import { useAppDispatch } from '@/state/hooks'
 import { createChat } from '@/state/chatSlice'
 import FieldInput from '@/components/Form/FieldInput'
-import { Form, useForm } from 'react-ezform';
+import { useForm } from 'react-ezform';
+import { Form } from '@/components/Form/Form';
 
 function ChatCreate() {
 
