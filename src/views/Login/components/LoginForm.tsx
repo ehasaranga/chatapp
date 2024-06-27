@@ -21,7 +21,7 @@ function LoginForm() {
         },
         onSubmit: async (val, ctx) => {
 
-            loginUser(val).unwrap().then(data => {
+            await loginUser(val).unwrap().then(data => {
 
                 login(data)
 
