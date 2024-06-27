@@ -1,9 +1,7 @@
-import React, { PropsWithChildren } from "react";
-import { FormProvider, UseForm } from "react-ezform";
+import React from "react";
+import { FormProvider, FormProviderProps } from "react-ezform";
 
-type FormType = PropsWithChildren & { hook: UseForm }
-
-export const Form: React.FC<FormType> = (props) => {
+export const Form: React.FC<FormProviderProps> = (props) => {
 
     const { children, hook } = props
 

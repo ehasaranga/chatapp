@@ -1,9 +1,15 @@
+import { Spinner } from "@chakra-ui/spinner";
+import React, { ReactNode } from "react";
 
 const Button:React.FC<IButtonProps> = (props) => {
 
-    const defaults:any = {
+    const { loading } = props;
+
+    const spinner = props.spinner ?? <Spinner thickness="3px" boxSize={10} /> ;
+
+    const defaults:Partial<IButtonProps> = {
         type: 'button',
-        kind: "primary",
+        variant: 'primary'
     }
 
     const options:IButtonProps = {...defaults, ...props};
@@ -11,7 +17,7 @@ const Button:React.FC<IButtonProps> = (props) => {
     const classes = ['btn'];
     if (options.className) classes.push(options.className)
     if (options.size) classes.push("btn-" + options.size)
-    if (options.type) classes.push("btn-" + options.type)
+    if (options.variant) classes.push("btn-" + options.variant)
 
     const onClick = (e: any) => {
 
@@ -24,18 +30,23 @@ const Button:React.FC<IButtonProps> = (props) => {
     return (
         <button 
             className={classes.join(" ")}
-            type={'button'}
-            onClick={onClick}
-        >{options.label}</button>
+            type={options.type}
+            onClick={options.type === 'submit' ? undefined : onClick}
+        >{loading ? spinner : options.label}</button>
     )
 }
 
 export default Button
 
 interface IButtonProps {
-    type?: "primary" | "secondary";
+    variant?: "primary" | "secondary";
     size?: 'wide';
     className?: string;
     label: string;
     onClick?: (e:any) => void;
+    disabled?: boolean;
+    icon?: ReactNode;
+    loading?: boolean;
+    spinner?: ReactNode;
+    type?: 'button' | 'submit'
 }

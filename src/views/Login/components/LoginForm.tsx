@@ -4,36 +4,36 @@ import { useUser } from '../../../hooks/useUser';
 import { useLoginMutation } from '@/api/userApi';
 import FieldInput from '@/components/Form/FieldInput';
 import { z } from 'zod';
-import { Form, useForm } from 'react-ezform';
+import { useForm } from 'react-ezform';
+import { Form } from '@/components/Form/Form';
+import Button from '@/components/Button/Button';
 
 function LoginForm() {
 
-    const [loginUser, { data: loginData, isSuccess, isLoading }] = useLoginMutation()
+    const [loginUser, { data: loginData }] = useLoginMutation()
 
     const { login } = useUser()
 
-    const {register, ...loginForm} = useForm({
+    const { register:reg, ...loginForm } = useForm({
         initVal: {
             email: '',
             password: ''
         },
-        onSubmit: (val, ctx) => {
+        onSubmit: async (val, ctx) => {
 
-            ctx.reset()
+            loginUser(val).unwrap().then(data => {
 
-            // loginUser(val).unwrap().then(data => {
+                login(data)
 
-            //     login(data)
+                console.log('success', data)
 
-            //     console.log('success', data)
+            }).catch(err => {
 
-            // }).catch(err => {
+                ctx.setErrors(err.data.errors)
 
-            //     ctx.setErrors(err.data.errors)
+                console.log('err ', err)
 
-            //     console.log('err ', err)
-
-            // });
+            });
 
         },
         validate: (val) => {
@@ -44,9 +44,11 @@ function LoginForm() {
             })
 
             return schema.safeParse(val).error?.flatten().fieldErrors
-            
+
         }
     });
+
+    const { isWaiting } = loginForm
 
     return (
         <div className="login-box">
@@ -65,7 +67,7 @@ function LoginForm() {
 
                         <FieldInput
 
-                            {...register({
+                            {...reg({
                                 name: 'email',
                                 label: 'Email:'
                             })}
@@ -77,21 +79,13 @@ function LoginForm() {
 
                     <div className="col col-12">
 
-
-                        {/* <FieldInput
-                            type='password'
-                            name='password'
-                            label={'Password:'}
-                        /> */}
-
                         <FieldInput
-                            {...register({
+                            {...reg({
                                 name: 'password',
                                 type: 'password',
                                 label: 'Password:',
                             })}
                         />
-
 
                     </div>
 
@@ -99,8 +93,7 @@ function LoginForm() {
 
                 <Space v={20} />
 
-                <input className='btn btn-primary btn-wide' type="submit" value="Login" />
-
+                <Button label='Login' loading={isWaiting} type='submit' className='btn-wide' />
 
             </Form>
 
