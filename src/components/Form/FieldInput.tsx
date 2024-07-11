@@ -1,20 +1,22 @@
 import React from 'react'
-import { useFormContext, withField } from 'react-ezform';
 
 const FieldInput:React.FC<IFieldTextProps> = (props) => {
 
-    const ctx = useFormContext();
-
-    const { name, value, label, onChange, type, placeholder, className, ...rest } = props;
+    const { 
+        name, 
+        value, 
+        label, 
+        onChange, 
+        onBlur, 
+        onFocus, 
+        type, 
+        placeholder, 
+        className, 
+        error
+     } = props;
 
     const classes = ['form-field'];
     if (className) classes.push(className);
-
-    const handleChange = onChange ?? ctx.handleChange
-
-    const inputValue = ctx.values[name] ?? value ?? '';
-
-    const validationError = ctx.formatError(name);
 
     return (
         <div className="field-group">
@@ -23,23 +25,22 @@ const FieldInput:React.FC<IFieldTextProps> = (props) => {
 
             <input 
                 className={classes.join(" ")} 
-                type={type ? type : 'text'} 
-                name={name} 
-                value={inputValue} 
-                onChange={handleChange} 
+                value={value} 
+                onChange={onChange} 
+                onFocus={onFocus}
+                onBlur={onBlur}
                 placeholder={placeholder}
-                onFocus={ctx.handleOnFocus}
-                onBlur={ctx.handleOnBlur}
-                {...rest} 
+                name={name}
+                type={type}
             />
 
-            {validationError && <span className="field-msg field-error">{validationError}</span>}
+            {error && <span className="field-msg field-error">{error}</span>}
 
         </div>
     )
 }
 
-export default withField(FieldInput)
+export default FieldInput
 
 interface IFieldTextProps {
     type?: 'text' | 'password' | 'number' | 'tel',
@@ -47,7 +48,10 @@ interface IFieldTextProps {
     value?: any;
     label?: string;
     onChange?: (e:any) => void;
+    onFocus?: (e:any) => void;
+    onBlur?: (e:any) => void;
     className?: string;
+    error?: string[] | string
     [key:string]: any
 }
 

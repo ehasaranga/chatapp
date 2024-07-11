@@ -14,10 +14,10 @@ function LoginForm() {
 
     const { login } = useUser()
 
-    const { register:reg, ...loginForm } = useForm({
+    const loginForm = useForm({
         initVal: {
             email: '',
-            password: ''
+            password: '',
         },
         onSubmit: async (val, ctx) => {
 
@@ -63,29 +63,15 @@ function LoginForm() {
 
                 <div className="row gutter-20 edge">
 
-                    <div className="col col-12">
+                    <div className="col col-12 test">
 
-                        <FieldInput
-
-                            {...reg({
-                                name: 'email',
-                                label: 'Email:'
-                            })}
-
-                        />
-
+                        <FieldInput name="email" label="Email:" />
 
                     </div>
 
                     <div className="col col-12">
 
-                        <FieldInput
-                            {...reg({
-                                name: 'password',
-                                type: 'password',
-                                label: 'Password:',
-                            })}
-                        />
+                        <FieldInput name="password" label="Password:" type='password'/>
 
                     </div>
 
