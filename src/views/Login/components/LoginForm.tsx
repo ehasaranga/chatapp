@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { useForm } from 'react-ezform';
 import { Form } from '@/components/Form/Form';
 import Button from '@/components/Button/Button';
+import { Message } from '@/components/Message/Message';
 
 function LoginForm() {
 
@@ -29,7 +30,11 @@ function LoginForm() {
 
             }).catch(err => {
 
-                ctx.setErrors(err.data.errors)
+                ctx.setErrors({
+                    ...err.data.errors
+                })
+
+                if (err.status === 401) loginForm.setMsg('Please check your username & password !');
 
                 console.log('err ', err)
 
@@ -71,11 +76,20 @@ function LoginForm() {
 
                     <div className="col col-12">
 
-                        <FieldInput name="password" label="Password:" type='password'/>
+                        <FieldInput name="password" label="Password:" type='password' />
 
                     </div>
 
                 </div>
+
+
+
+                {loginForm.msg &&
+                    <>
+                        <Space v={20} />
+                        <Message type='error' text={loginForm.msg} />
+                    </>
+                }
 
                 <Space v={20} />
 

@@ -1,0 +1,17 @@
+.message-wrap {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    border-radius: 3px;
+    &.warn {
+        background: rgba($warn, 0.1);
+        color: $warn;
+    }
+    &.error {
+        background: rgba($error, 0.15);
+        color: $error;
+    }
+    &.success {
+        background: rgba($success, 0.15);
+        color: $success;
+    }
+}
