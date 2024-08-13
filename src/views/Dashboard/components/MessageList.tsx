@@ -13,7 +13,7 @@ const MessageList: React.FC = () => {
 
     const msg = useAppSelector((state:RootState) => state.msgs);
 
-    const messages = msg[inView];
+    const messages = inView === null ? [] : msg[inView];
 
     const scrollRef = useRef<HTMLDivElement>(null);
 
